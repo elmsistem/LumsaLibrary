@@ -9,6 +9,7 @@ export { Customer, type CreateCustomerProps } from "./domain/entities/customer.e
 export { type CustomerRepository } from "./domain/repositories/customer.repository";
 export {
   assertConsumidorFinalAllowed,
+  ConsumidorFinalRule,
   MAX_CONSUMIDOR_FINAL_CENTS,
 } from "./domain/rules/consumidor-final.rule";
 

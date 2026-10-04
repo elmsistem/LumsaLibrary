@@ -20,3 +20,9 @@ export function assertConsumidorFinalAllowed(totalAmountCents: number, idType: I
     );
   }
 }
+
+export class ConsumidorFinalRule {
+  public static validateTotalAmount(totalAmount: { toCents(): number }): void {
+    assertConsumidorFinalAllowed(totalAmount.toCents(), "CONSUMIDOR_FINAL");
+  }
+}
