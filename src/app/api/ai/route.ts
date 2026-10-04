@@ -1,6 +1,26 @@
 import { NextResponse } from "next/server";
 import { getGeminiClient, DEFAULT_MODEL } from "@/lib/gemini";
 
+/**
+ * Endpoint de estado para comprobar si la API Key está configurada sin exponerla.
+ */
+export async function GET() {
+  const isConfigured = Boolean(
+    process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() !== ""
+  );
+
+  return NextResponse.json({
+    configured: isConfigured,
+    model: DEFAULT_MODEL,
+    message: isConfigured
+      ? "Google AI Studio vinculado y listo para procesar solicitudes."
+      : "Falta configurar GEMINI_API_KEY en el archivo .env.local",
+  });
+}
+
+/**
+ * Endpoint para enviar prompts a Google AI Studio.
+ */
 export async function POST(req: Request) {
   try {
     const { prompt, model } = await req.json();
