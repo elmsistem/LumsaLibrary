@@ -69,3 +69,16 @@ Antes de implementar cualquier módulo, debes consultar su especificación en:
 5. **Tipado Estricto:** Prohibido el uso de `any`. Toda entrada externa debe validarse con `zod`.
 6. **Prohibición de Interfaces Volátiles (Anti-Mocking):** Prohibido crear maquetas estáticas con datos en memoria (`useState` con listas quemadas) para simular funcionamiento. Toda interfaz de usuario debe estar conectada a la base de datos real mediante la capa de aplicación.
 7. **Trazabilidad y Verificación Obligatoria:** Toda implementación debe registrarse en `docs/07-trazabilidad-y-estado-de-implementacion.md` con evidencia comprobable (tests, scripts de BD o endpoints verificados) antes de darse por completada.
+
+## 3. Autorización Plena de Modificación y Autonomía Ejecutiva (Zero-Approval Policy)
+1. **Mandato de Autonomía Total:** El agente cuenta con autorización permanente, expresa y preestablecida para crear, editar, modificar, refactorizar o eliminar cualquier archivo del proyecto sin solicitar permiso ni confirmación previa al usuario, siempre que la acción respete la arquitectura y la normativa vigente.
+2. **Prohibición de Preguntas de Rutina y Parálisis por Aprobación:**
+   - Queda estrictamente PROHIBIDO finalizar turnos preguntando "¿Desea que continúe?", "¿Procedo con el siguiente paso?", "¿Autoriza iniciar...?", o solicitando al usuario que escoja entre opciones técnicas cuando la ingeniería ya dicta la mejor solución.
+   - El agente DEBE evaluar de forma autónoma la opción más profesional, técnica y adecuada para el proyecto, tomar la decisión y **ejecutarla de inmediato**.
+3. **Flujo de Ejecución Continuo e Imparable:**
+   - Al concluir una tarea o paso técnico, el agente no se detiene a pedir permiso para el siguiente; procede automáticamente con la siguiente tarea de la fase activa, reportando los resultados ya comprobados y verificados.
+4. **Únicas Causales Válidas para Detenerse y Consultar al Usuario:**
+   - Activación de la **Directriz Cero** (cuando el usuario pide una orden que viola la normativa o el plan).
+   - Bloqueo técnico insalvable (ej. fallo físico de hardware, requerimiento de credenciales privadas de producción que solo el usuario posee).
+   - Ambigüedad de negocio o regla fiscal ecuatoriana no documentada en `/docs` que requiera decisión del propietario.
+

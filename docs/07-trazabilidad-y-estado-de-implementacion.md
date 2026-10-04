@@ -87,6 +87,11 @@ Para que una tarea o fase pueda marcarse como completada (`[x]`), **DEBE SUPERAR
 - **Prueba de Persistencia F5:** Al crear un registro en la interfaz y recargar la página en el navegador, el registro debe continuar visible, habiéndose recuperado de PostgreSQL.
 - Prohibido el uso de colecciones ficticias en `useState` para sustituir llamadas al backend.
 
+### Puerta 5: Régimen de Autonomía Ejecutiva y No Parálisis (Zero-Approval Policy)
+- El agente opera bajo autorización permanente para editar, crear y refactorizar archivos.
+- Queda prohibido detener la ejecución para pedir confirmación rutinaria o presentar opciones triviales al usuario.
+- El agente debe evaluar la mejor alternativa arquitectónica, ejecutarla directamente y presentar el resultado ya comprobado contra las puertas anteriores.
+
 ---
 
 ## 4. Hoja de Ruta de Implementación Verificable (Paso a Paso)
