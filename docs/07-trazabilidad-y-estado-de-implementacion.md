@@ -62,7 +62,13 @@ El progreso del sistema se audita a través de **5 Capas de Ingeniería**:
 
 ## 3. Protocolo Obligatorio de Verificación (Verification Gates)
 
-Para que una tarea o fase pueda marcarse como completada (`[x]`), **DEBE SUPERAR OBLIGATORIAMENTE LAS SIGUIENTES 4 PUERTAS DE VERIFICACIÓN**:
+Para que una tarea o fase pueda marcarse como completada (`[x]`), **DEBE SUPERAR OBLIGATORIAMENTE LAS SIGUIENTES PUERTAS DE VERIFICACIÓN**:
+
+### Puerta 0: Auditoría Previa de Órdenes y Control de Cambios (Pre-Flight Architectural Gate)
+- **Regla de No Complacencia:** Antes de ejecutar cualquier instrucción del usuario, se debe confrontar contra `AGENTS.md`, la fase activa de `docs/06` y el modelo de datos.
+- **Detección de Conflicto:** Si la instrucción solicita omitir la persistencia, saltarse fases, insertar datos quemados en `useState` o alterar la lógica tributaria del SRI, el agente tiene prohibido ejecutarla.
+- **Emisión Obligatoria del Informe:** El agente debe emitir el **Informe de Alerta de Conformidad y Evaluación de Impacto**, detallando la contradicción, los riesgos y la ruta de implementación correcta.
+- **Aprobación de Cambio de Alcance:** Si el usuario decide conscientemente cambiar las prioridades del negocio, primero debe actualizarse la hoja de ruta en este documento y en `docs/06` antes de modificar el código.
 
 ### Puerta 1: Verificación de Código y Tipado (Estática)
 - Comando: `npm run type-check` (0 errores de TypeScript con `strict: true`).

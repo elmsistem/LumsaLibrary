@@ -103,3 +103,21 @@ Dado que los servidores del SRI ecuatoriano o el enlace a internet sufren interm
 * **Motor de Base de Datos:** PostgreSQL >= 16.
 * **Nivel de Aislamiento:** Transacciones críticas (como el cierre de una venta y el Kardex) se ejecutan bajo aislamiento `READ COMMITTED` con bloqueos pesimistas en las filas de stock (`SELECT ... FOR UPDATE`) o verificación optimista para prevenir ventas con stock insuficiente ante múltiples cajas simultáneas.
 * **Moneda:** En Ecuador la moneda oficial es el Dólar de los Estados Unidos (USD). Todos los cálculos financieros internos se almacenan como enteros en centavos (`integer` o `bigint`) o tipos numéricos de precisión fija (`numeric(14, 4)` o `numeric(12, 2)`). **Queda prohibido el uso de punto flotante (`float` o `double`) para montos monetarios o impuestos.**
+
+---
+
+## 6. Principio Anti-Mocking (Prohibición de Interfaces Volátiles)
+
+El sistema prohíbe taxativamente la creación de pantallas o vistas con arreglos de datos en memoria (`useState` con listas quemadas) para simular operatividad:
+1. Toda pantalla interactiva en el frontend debe conectarse obligatoriamente a la base de datos PostgreSQL mediante Server Actions o endpoints de API que invoquen los Casos de Uso del módulo correspondiente.
+2. Si un módulo aún no tiene su capa de persistencia o API completada, **no se debe construir una interfaz simulada**. Debe completarse primero la base de datos y la API.
+
+---
+
+## 7. Gobernanza de Arquitectura y Control de Cambios (Pre-Flight Gate)
+
+Para proteger la visión de 20+ años del ERP contra la prisa o peticiones ambiguas de los usuarios:
+1. **Validación Previa Obligatoria:** Todo desarrollador o agente de IA debe validar cualquier requerimiento nuevo contra los principios de arquitectura y la hoja de ruta en `docs/06` y `docs/07`.
+2. **Prohibición de Complacencia Ciega:** Si una orden del usuario salta fases, viola la inmutabilidad del Kardex o contradice la normativa ecuatoriana del SRI, el ejecutor debe detenerse y presentar el **Informe de Alerta de Conformidad y Evaluación de Impacto**.
+3. **Procedimiento de Modificación:** Ningún cambio que altere el orden de las fases o la arquitectura puede codificarse sin antes registrar formalmente la justificación y actualización del plan en `docs/06-plan-de-implementacion.md` y `docs/07-trazabilidad-y-estado-de-implementacion.md`.
+

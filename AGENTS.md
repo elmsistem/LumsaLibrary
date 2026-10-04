@@ -14,6 +14,43 @@ Bienvenido a LumsaLibrary, un ERP de alta disponibilidad diseñado con una proye
 
 Antes de generar o modificar cualquier archivo de código en este repositorio, **DEBES SEGUIR RIGUROSAMENTE ESTAS DIRECTRICES**:
 
+## 0. Directriz Cero: Validación Previa Obligatoria contra el Plan (Anti-Drift Gate)
+**PROHIBICIÓN DE COMPLACENCIA CIEGA:** Antes de ejecutar cualquier orden, comando o cambio de código solicitado por el usuario, el agente TIENE LA OBLIGACIÓN de contrastar la solicitud contra:
+1. Las Reglas Técnicas No Negociables de este documento (`AGENTS.md`).
+2. El Modelo de Dominio y Principios de Arquitectura (`docs/01` al `docs/04`).
+3. La Fase Activa y Secuencia de la Hoja de Ruta (`docs/06` y `docs/07`).
+
+**Si la solicitud del usuario:**
+- Se salta fases o prerrequisitos técnicos (ej. crear pantallas sin persistencia previa en base de datos).
+- Viola principios de arquitectura (ej. meter lógica en React, usar mocks/datos en memoria, omitir cálculos del SRI o PMP).
+- Genera contradicciones u omisiones en el modelo de datos o planes vigentes.
+
+**EL AGENTE TIENE PROHIBIDO EJECUTARLA DIRECTAMENTE.**  
+El agente DEBE DETENERSE y emitir un **Informe de Alerta de Conformidad y Evaluación de Impacto** con el siguiente formato obligatorio:
+
+```markdown
+⚠️ [ALERTA DE CONFORMIDAD ARQUITECTÓNICA Y CONTROL DE CAMBIOS]
+
+1. SOLICITUD EVALUADA:
+   > "[Instrucción exacta del usuario]"
+
+2. CONFLICTO NORMATIVO IDENTIFICADO:
+   - Documento / Regla Afectada: [docs/XX o AGENTS.md Regla N]
+   - Infracción: [Descripción precisa de la contradicción o salto de fase]
+
+3. DIAGNÓSTICO DE RIESGO Y CONTRADICCIONES:
+   - Impacto Técnico: [Riesgo de deuda técnica, pérdida de datos o inconsistencia]
+   - Contradicción en el Plan: [Por qué contradice la secuencia planificada]
+   - Riesgo Legal / SRI: [Si afecta normativa tributaria ecuatoriana]
+
+4. PROCEDIMIENTO CORRECTO SEGÚN EL PLAN:
+   [La secuencia técnica y ordenada que debe ejecutarse paso a paso]
+
+5. OPCIONES DE CONTINUIDAD PARA EL USUARIO:
+   - Opción A (Recomendada): Proceder con el Paso Correcto según la Hoja de Ruta.
+   - Opción B (Modificación Formal del Plan): Si el negocio exige alterar el plan, actualizar formalmente docs/06 y docs/07 antes de escribir código.
+```
+
 ## 1. Documentación Obligatoria de Referencia (`/docs`)
 Antes de implementar cualquier módulo, debes consultar su especificación en:
 - `docs/01-vision-y-alcance.md`: Modelo de negocio y glosario ecuatoriano.
