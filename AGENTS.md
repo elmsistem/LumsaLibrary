@@ -22,6 +22,7 @@ Antes de implementar cualquier módulo, debes consultar su especificación en:
 - `docs/04-normativa-sri-ecuador.md`: Especificación técnica SRI (Clave de acceso, XML v1.1.0, XAdES-BES, SOAP).
 - `docs/05-estandares-de-codigo.md`: Convenciones de TypeScript y manejo de errores.
 - `docs/06-plan-de-implementacion.md`: Fases ordenadas de desarrollo.
+- `docs/07-trazabilidad-y-estado-de-implementacion.md`: Matriz de madurez, bitácora auditable y protocolo de verificación.
 
 ## 2. Reglas Técnicas No Negociables
 1. **Desacoplamiento Total:** La lógica de negocio jamás debe residir en componentes de React (`src/app`). Debe estructurarse en `src/modules/<modulo>/domain` y `application`.
@@ -29,3 +30,5 @@ Antes de implementar cualquier módulo, debes consultar su especificación en:
 3. **Cálculos Monetarios:** Prohibido el uso de operaciones de punto flotante en cálculos de dinero o impuestos del SRI. Usar enteros en centavos o aritmética de precisión decimal fija.
 4. **Validación Ecuatoriana Estricta:** Cédulas y RUCs deben validarse con sus algoritmos oficiales (Módulo 10 y Módulo 11). El Consumidor Final está limitado a un máximo de $50 USD según la ley ecuatoriana.
 5. **Tipado Estricto:** Prohibido el uso de `any`. Toda entrada externa debe validarse con `zod`.
+6. **Prohibición de Interfaces Volátiles (Anti-Mocking):** Prohibido crear maquetas estáticas con datos en memoria (`useState` con listas quemadas) para simular funcionamiento. Toda interfaz de usuario debe estar conectada a la base de datos real mediante la capa de aplicación.
+7. **Trazabilidad y Verificación Obligatoria:** Toda implementación debe registrarse en `docs/07-trazabilidad-y-estado-de-implementacion.md` con evidencia comprobable (tests, scripts de BD o endpoints verificados) antes de darse por completada.

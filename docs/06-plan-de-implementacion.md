@@ -1,7 +1,8 @@
 # 06. Plan de Implementación y Hoja de Ruta
 
 > **Estado:** Documento Normativo Obligatorio  
-> **Estrategia:** Desarrollo incremental guiado por dominio (Domain-Driven Roadmap)
+> **Estrategia:** Desarrollo incremental guiado por dominio (Domain-Driven Roadmap)  
+> **Seguimiento y Verificación en Vivo:** Consultar [`docs/07-trazabilidad-y-estado-de-implementacion.md`](file:///d:/Proyectos/LumsaLibrary/docs/07-trazabilidad-y-estado-de-implementacion.md) para la matriz de madurez por capas y comandos de comprobación.
 
 ---
 
