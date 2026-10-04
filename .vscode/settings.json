@@ -1,0 +1,61 @@
+{
+  // --- TypeScript LSP / TSDK Configuration ---
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.tsserver.pluginPaths": ["node_modules"],
+
+  // Capa de seguridad y diagnóstico continuo en segundo plano de todo el proyecto
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.tsserver.watchOptions": {
+    "watchFile": "useFsEvents",
+    "watchDirectory": "useFsEvents"
+  },
+
+  // --- Máxima eficiencia en autocompletado e imports ---
+  "typescript.suggest.completeFunctionCalls": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.suggest.paths": true,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.jsxAttributeCompletionStyle": "auto",
+  "typescript.preferences.quoteStyle": "double",
+
+  // --- Sugerencias del Editor y Comportamiento ---
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "on"
+  },
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.inlineSuggest.enabled": true,
+  "editor.parameterHints.enabled": true,
+
+  // --- Inlay Hints para máxima claridad de tipos en tiempo real ---
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterNames.suppressWhenArgumentMatchesName": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+
+  // --- Tailwind CSS IntelliSense / LSP ---
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.suggestions": true,
+  "tailwindCSS.classAttributes": ["class", "className"],
+
+  // --- Acciones automáticas al guardar ---
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  }
+}
