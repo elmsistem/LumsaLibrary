@@ -6,7 +6,9 @@ export {
   type ValidationResult,
 } from "./domain/value-objects/ecuadorian-identification.vo";
 export { Customer, type CreateCustomerProps } from "./domain/entities/customer.entity";
+export { Supplier, type CreateSupplierProps } from "./domain/entities/supplier.entity";
 export { type CustomerRepository } from "./domain/repositories/customer.repository";
+export { type SupplierRepository } from "./domain/repositories/supplier.repository";
 export {
   assertConsumidorFinalAllowed,
   ConsumidorFinalRule,
@@ -30,3 +32,4 @@ export {
   type NewSupplierRow,
 } from "./infrastructure/database/schema/stakeholders.schema";
 export { DrizzleCustomerRepository } from "./infrastructure/persistence/drizzle-customer.repository";
+export { DrizzleSupplierRepository } from "./infrastructure/persistence/drizzle-supplier.repository";
