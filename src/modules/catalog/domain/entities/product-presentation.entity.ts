@@ -29,6 +29,10 @@ export class ProductPresentation {
   private isDefault: boolean;
   private isActive: boolean;
 
+  public static create(props: CreatePresentationProps): ProductPresentation {
+    return new ProductPresentation(props);
+  }
+
   constructor(props: CreatePresentationProps) {
     if (!props.name || props.name.trim().length === 0) {
       throw new ValidationError("El nombre de la presentación no puede estar vacío.", "INVALID_PRESENTATION_NAME");

@@ -39,6 +39,10 @@ export class Product {
   private isActive: boolean;
   private presentations: ProductPresentation[] = [];
 
+  public static create(props: CreateProductProps): Product {
+    return new Product(props);
+  }
+
   constructor(props: CreateProductProps) {
     if (!props.sku || props.sku.trim().length === 0) {
       throw new ValidationError("El SKU del producto no puede estar vacío.", "INVALID_SKU");
