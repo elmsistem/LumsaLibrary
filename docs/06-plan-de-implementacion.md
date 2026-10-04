@@ -5,6 +5,24 @@
 
 ---
 
+## Documentación Técnica y Planes por Módulo (`/docs/modules/`)
+
+Cada subsistema del ERP cuenta con su propio documento exhaustivo de ingeniería con diseño relacional (DDL), casos de uso, contratos de API pública, criterios de aceptación y desglose de tareas:
+
+| Código | Módulo | Documento Técnico y Plan |
+|---|---|---|
+| **M00** | Fundaciones e Infraestructura Base | [`docs/modules/00-core-infrastructure.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/00-core-infrastructure.md) |
+| **M01** | Catálogo, Productos y Fraccionamiento | [`docs/modules/01-catalog-products.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/01-catalog-products.md) |
+| **M02** | Clientes y Proveedores (Identidad Ecuador) | [`docs/modules/02-stakeholders-customers.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/02-stakeholders-customers.md) |
+| **M03** | Inventario y Kardex Inmutable (PMP) | [`docs/modules/03-inventory-kardex.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/03-inventory-kardex.md) |
+| **M04** | Motor Fiscal de Facturación SRI | [`docs/modules/04-billing-sri.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/04-billing-sri.md) |
+| **M05** | Punto de Venta (POS) y Control de Cajas | [`docs/modules/05-pos-cash-control.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/05-pos-cash-control.md) |
+| **M06** | Temporada Escolar y Listas de Útiles | [`docs/modules/06-school-lists.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/06-school-lists.md) |
+| **M07** | Compras y Parser XML SRI Proveedores | [`docs/modules/07-purchasing-suppliers.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/07-purchasing-suppliers.md) |
+| **M08** | Analítica, Dashboard e IA (Gemini) | [`docs/modules/08-analytics-ai.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/08-analytics-ai.md) |
+
+---
+
 ## Cronograma por Fases de Desarrollo
 
 ```mermaid
