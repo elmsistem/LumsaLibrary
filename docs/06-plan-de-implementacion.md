@@ -20,6 +20,7 @@ Cada subsistema del ERP cuenta con su propio documento exhaustivo de ingeniería
 | **M06** | Temporada Escolar y Listas de Útiles | [`docs/modules/06-school-lists.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/06-school-lists.md) |
 | **M07** | Compras y Parser XML SRI Proveedores | [`docs/modules/07-purchasing-suppliers.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/07-purchasing-suppliers.md) |
 | **M08** | Analítica, Dashboard e IA (Gemini) | [`docs/modules/08-analytics-ai.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/08-analytics-ai.md) |
+| **M09** | Configuración, Respaldos y Comunicaciones | [`docs/modules/09-system-settings-communications.md`](file:///d:/Proyectos/LumsaLibrary/docs/modules/09-system-settings-communications.md) |
 
 ---
 

@@ -42,14 +42,18 @@ CREATE TYPE payment_method_enum AS ENUM (
     'BANK_TRANSFER_DEUNA', 
     'DEBIT_CARD', 
     'CREDIT_CARD', 
-    'STORE_CREDIT'
+    'STORE_CREDIT',
+    'TAX_WITHHOLDING_RECEIVED',  -- Retención en la fuente recibida de instituciones o empresas
+    'CUSTOMER_ADVANCE_APPLIED'   -- Aplicación de anticipo previo de lista escolar
 );
 
--- Sesiones y Turnos de Caja
+-- Sesiones y Turnos de Caja (Vinculados a un Punto de Emisión SRI)
 CREATE TABLE cash_sessions (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL,
     terminal_code VARCHAR(50) NOT NULL,
+    establishment_code VARCHAR(3) DEFAULT '001' NOT NULL,
+    emission_point_code VARCHAR(3) DEFAULT '001' NOT NULL, -- Asignado a esta caja (ej: '001', '002')
     opening_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     closing_time TIMESTAMP WITH TIME ZONE,
     initial_float_cents INTEGER NOT NULL,    -- Fondo de sencillo

@@ -84,15 +84,31 @@ CREATE TABLE sri_company_configs (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
--- Comprobantes Electrónicos Emitidos
+-- Control Atómico de Secuenciales por Punto de Emisión y Tipo de Documento
+CREATE TABLE sri_sequentials (
+    establishment_code VARCHAR(3) NOT NULL,
+    emission_point_code VARCHAR(3) NOT NULL,
+    document_type_code VARCHAR(2) NOT NULL, -- '01': Factura, '04': Nota de Crédito
+    current_sequential INTEGER DEFAULT 0 NOT NULL,
+    PRIMARY KEY (establishment_code, emission_point_code, document_type_code)
+);
+
+-- Comprobantes Electrónicos Emitidos (Facturas y Notas de Crédito)
 CREATE TABLE electronic_invoices (
     id UUID PRIMARY KEY,
+    document_type_code VARCHAR(2) DEFAULT '01' NOT NULL, -- '01' o '04'
     access_key VARCHAR(49) NOT NULL UNIQUE,
+    establishment_code VARCHAR(3) NOT NULL,
+    emission_point_code VARCHAR(3) NOT NULL,
     sequential_number VARCHAR(9) NOT NULL,
     emission_date DATE NOT NULL,
     customer_id UUID NOT NULL REFERENCES customers(id),
-    sale_order_id UUID NOT NULL,
+    sale_order_id UUID,
     status sri_invoice_status_enum DEFAULT 'PENDING_GENERATION' NOT NULL,
+    -- Datos específicos para Notas de Crédito (Tipo 04)
+    modified_invoice_number VARCHAR(17), -- Ej: 001-001-000000125
+    modified_invoice_access_key VARCHAR(49),
+    modification_reason TEXT,
     subtotal_0_cents INTEGER NOT NULL,
     subtotal_15_cents INTEGER NOT NULL,
     total_discount_cents INTEGER DEFAULT 0 NOT NULL,
@@ -103,7 +119,8 @@ CREATE TABLE electronic_invoices (
     sri_error_message TEXT,
     xml_signed_path TEXT,
     ride_pdf_path TEXT,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT uq_doc_secuencial UNIQUE (establishment_code, emission_point_code, document_type_code, sequential_number)
 );
 
 CREATE INDEX idx_invoices_access_key ON electronic_invoices(access_key);
@@ -127,13 +144,18 @@ CREATE INDEX idx_sri_queue_processing ON sri_outbox_queue(is_processing, next_re
 
 ## 4. Casos de Uso (Application Layer)
 
-1. **`GenerateAccessKeyUseCase`**:
+1. **`GetNextSequentialUseCase`**:
+   - Bloquea la fila del punto de emisión (`SELECT ... FOR UPDATE` en `sri_sequentials`).
+   - Incrementa atómicamente el contador, garantizando ceros a la izquierda (ej. `000000126`).
+2. **`GenerateAccessKeyUseCase`**:
    - Compone la cadena de 48 dígitos base según fecha, tipo comprobante, RUC, ambiente, establecimiento, punto emisión y secuencial.
    - Aplica el algoritmo Módulo 11 ponderado para calcular el dígito 49.
-2. **`BuildAndSignInvoiceUseCase`**:
-   - Construye la estructura XML conforme a la ficha técnica v1.1.0 del SRI.
+3. **`BuildAndSignInvoiceUseCase`**:
+   - Construye la estructura XML conforme a la ficha técnica v1.1.0 del SRI para Facturas.
    - Carga el certificado `.p12` del emisor y genera los nodos `ds:Signature` y `xades:QualifyingProperties` conforme a la norma XAdES-BES.
-3. **`TransmitToSriWorker`**:
+4. **`EmitCreditNoteUseCase`**:
+   - Construye y firma el XML de Nota de Crédito enlazando la factura original modificada, el motivo y el recálculo tributario.
+5. **`TransmitToSriWorker`**:
    - Toma lotes de comprobantes de `sri_outbox_queue`.
    - Llama al Web Service de Recepción por SOAP. Si es aceptado, consulta Autorización.
    - Si el SRI está indisponible, programa el siguiente reintento con retroceso exponencial (*backoff*).

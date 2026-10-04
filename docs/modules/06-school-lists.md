@@ -87,6 +87,17 @@ CREATE TABLE school_list_items (
     is_delivered BOOLEAN DEFAULT FALSE NOT NULL,
     substitute_product_id UUID REFERENCES products(id)
 );
+
+-- Registro de Anticipos Financieros en Caja
+CREATE TABLE school_list_advances (
+    id UUID PRIMARY KEY,
+    school_list_id UUID NOT NULL REFERENCES school_lists(id) ON DELETE CASCADE,
+    cash_session_id UUID NOT NULL REFERENCES cash_sessions(id),
+    amount_cents INTEGER NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    receipt_code VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
 ```
 
 ---
@@ -98,13 +109,15 @@ CREATE TABLE school_list_items (
    - Comprueba stock actual en el almacén de despacho.
    - Si no hay existencia de un ítem, busca artículos de la misma categoría y unidad como sustitutos sugeridos.
    - Genera la proforma con el total desglosado (con y sin IVA).
-2. **`ReserveSchoolListUseCase`**:
-   - Registra el abono financiero del cliente mediante la caja POS.
-   - Marca los ítems como reservados impidiendo que el mostrador común los venda a otros clientes.
-3. **`FulfillSchoolListToSaleUseCase`**:
+2. **`SendSchoolListWhatsAppUseCase`**:
+   - Transmite al número celular del padre de familia la cotización detallada con enlaces y botón de aprobación inmediata vía WhatsApp.
+3. **`ReserveSchoolListUseCase`**:
+   - Registra el abono financiero ingresándolo como movimiento en la sesión de caja del día (`cash_sessions`), emitiendo un "Recibo de Anticipo".
+   - Marca los ítems como reservados en bodega, impidiendo que el mostrador común los venda a otros clientes.
+4. **`FulfillSchoolListToSaleUseCase`**:
    - Transfiere todos los ítems reservados al carrito de la caja POS.
-   - Deduce el anticipo previamente abonado.
-   - Genera la factura electrónica SRI por el saldo restante y despacha el pedido.
+   - Aplica el anticipo acumulado como forma de pago `CUSTOMER_ADVANCE_APPLIED`.
+   - Genera la factura electrónica SRI por el valor total legal y despacha el pedido.
 
 ---
 

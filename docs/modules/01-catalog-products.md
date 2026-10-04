@@ -111,6 +111,8 @@ CREATE INDEX idx_presentations_barcode ON product_presentations(barcode);
    - Añade una presentación adicional (ej. *"Caja x 12"*, factor 12.0) con sus precios minorista y mayorista.
 3. **`SearchProductsUseCase`**:
    - Búsqueda simultánea: por coincidencia exacta de código de barras (lector óptico) o por similitud de texto difuso con `pg_trgm` (ej: el cajero escribe "cartul irs roj" y encuentra "Cartulina Iris Roja Pliego").
+4. **`GenerateBarcodeLabelUseCase`**:
+   - Genera etiquetas adhesivas en formato PDF o comandos ZPL/TSPL para impresoras térmicas (Zebra, Xprinter) con código de barras Code 128 o QR para artículos sueltos sin código de fábrica (pliegos, borradores, carpetas).
 
 ---
 
@@ -122,6 +124,7 @@ export interface CatalogModule {
   getPresentationById(id: string): Promise<ProductPresentation | null>;
   findProductByBarcode(barcode: string): Promise<ProductWithPresentations | null>;
   searchProducts(query: string, limit?: number): Promise<ProductSearchResult[]>;
+  generateBarcodeLabels(presentationId: string, quantity: number): Promise<Buffer>;
 }
 ```
 
@@ -132,6 +135,7 @@ export interface CatalogModule {
 - [ ] Un producto puede venderse en 3 presentaciones distintas (Unidad, Docena, Caja) vinculadas al mismo ID base.
 - [ ] La búsqueda difusa responde en menos de 50ms para un catálogo de 10,000 productos.
 - [ ] No es posible registrar una presentación con precio mayorista superior al minorista.
+- [ ] Generación e impresión de etiquetas con código de barras Code 128 legible por lectores láser para artículos sueltos.
 - [ ] Pruebas unitarias completas de la entidad `Product` y `ProductPresentation`.
 
 ---
@@ -143,4 +147,5 @@ export interface CatalogModule {
 * [ ] **Tarea 1.3:** Implementar `CreateProductUseCase` con creación automática de presentación base.
 * [ ] **Tarea 1.4:** Implementar `AddPresentationUseCase`.
 * [ ] **Tarea 1.5:** Implementar `SearchProductsUseCase` con soporte de lector de barras e índice trigram.
-* [ ] **Tarea 1.6:** Escribir suite de pruebas unitarias (`catalog.spec.ts`).
+* [ ] **Tarea 1.6:** Implementar generador de etiquetas adhesivas de código de barras (`barcode-label.generator.ts`).
+* [ ] **Tarea 1.7:** Escribir suite de pruebas unitarias (`catalog.spec.ts`).

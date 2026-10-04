@@ -105,7 +105,10 @@ CREATE TABLE inventory_balances (
    - Verifica que `current_stock_units >= requested_units`.
    - Si no hay stock suficiente, lanza `InsufficientStockError` y cancela la transacción.
    - Registra la salida en Kardex valorada al PMP actual.
-3. **`GetProductKardexUseCase`**:
+3. **`RecordCustomerReturnUseCase`**:
+   - Reingresa unidades al stock del almacén cuando se autoriza una devolución o Nota de Crédito de cliente.
+   - El reingreso se valora al costo unitario original de la venta, recalculando de forma transparente el PMP ponderado del inventario.
+4. **`GetProductKardexUseCase`**:
    - Devuelve la sábana histórica completa de movimientos con entradas, salidas y saldos para inspección fiscal o auditoría interna.
 
 ---
@@ -118,6 +121,7 @@ export interface InventoryModule {
   getCurrentPmp(productId: string, warehouseId: string): Promise<Money>;
   recordSaleExit(params: SaleExitParams): Promise<InventoryMovement>;
   recordPurchaseEntry(params: PurchaseEntryParams): Promise<InventoryMovement>;
+  recordCustomerReturn(params: CustomerReturnParams): Promise<InventoryMovement>;
   getKardexHistory(productId: string, warehouseId: string, from?: Date, to?: Date): Promise<KardexEntry[]>;
 }
 ```
@@ -128,6 +132,7 @@ export interface InventoryModule {
 
 - [ ] Simulación de 50 ventas concurrentes sobre el mismo artículo no produce saldo negativo ni descuadres en el saldo de Kardex.
 - [ ] El costo PMP coincide con el cálculo matemático exigido por el SRI tras compras sucesivas a costos distintos.
+- [ ] Las devoluciones de clientes (Notas de Crédito) reingresan unidades al stock al costo histórico de la venta original.
 - [ ] No existe ninguna instrucción SQL `UPDATE inventory_movements` en todo el repositorio.
 
 ---
@@ -138,5 +143,6 @@ export interface InventoryModule {
 * [ ] **Tarea 3.2:** Implementar la calculadora pura de dominio del PMP con pruebas unitarias (`pmp-calculator.spec.ts`).
 * [ ] **Tarea 3.3:** Implementar `RecordSaleExitUseCase` con bloqueos pesimistas de PostgreSQL.
 * [ ] **Tarea 3.4:** Implementar `RecordPurchaseMovementUseCase`.
-* [ ] **Tarea 3.5:** Implementar `GetProductKardexUseCase`.
-* [ ] **Tarea 3.6:** Pruebas de estrés y concurrencia sobre stock simultáneo.
+* [ ] **Tarea 3.5:** Implementar `RecordCustomerReturnUseCase` para reingresos por Notas de Crédito.
+* [ ] **Tarea 3.6:** Implementar `GetProductKardexUseCase`.
+* [ ] **Tarea 3.7:** Pruebas de estrés y concurrencia sobre stock simultáneo.
