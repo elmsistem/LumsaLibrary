@@ -76,12 +76,6 @@ export class Product {
       );
     }
 
-    // Si ya existe una por defecto y esta nueva es por defecto, desmarca la anterior
-    if (presentation.getIsDefault()) {
-      this.presentations.forEach((p) => {
-        // En entidades inmutables no reasignamos directamente, pero controlamos la lista
-      });
-    }
 
     this.presentations.push(presentation);
   }

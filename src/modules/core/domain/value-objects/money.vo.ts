@@ -38,6 +38,13 @@ export class Money {
   }
 
   /**
+   * Alias de conveniencia para fromDecimal.
+   */
+  public static fromDollars(dollars: number): Money {
+    return Money.fromDecimal(dollars);
+  }
+
+  /**
    * Crea una instancia de Money a partir de centavos enteros.
    */
   public static fromCents(cents: number): Money {
@@ -123,10 +130,24 @@ export class Money {
   }
 
   /**
+   * Alias de conveniencia para toDecimal.
+   */
+  public getDollars(): number {
+    return this.toDecimal();
+  }
+
+  /**
    * Retorna el valor bruto entero en centavos para persistencia en base de datos.
    */
   public toCents(): number {
     return this.cents;
+  }
+
+  /**
+   * Alias de conveniencia para toCents.
+   */
+  public getCents(): number {
+    return this.toCents();
   }
 
   /**
